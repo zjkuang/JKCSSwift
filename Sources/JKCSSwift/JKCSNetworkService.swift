@@ -8,6 +8,9 @@
 import Foundation
 
 public class JKCSNetworkService {
+    
+    public static let shared = JKCSNetworkService()
+    
     public init() {}
     
     public enum HTTPMethod: String {

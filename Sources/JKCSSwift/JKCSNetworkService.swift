@@ -17,7 +17,11 @@ public class JKCSNetworkService {
         case GET, POST, PUT, DELETE
     }
     
-    public func dataTask(method: HTTPMethod, url: String, body: [String : Any]? = nil, httpHeaders: [String : String]? = nil, completionHandler: @escaping (Result<Any, JKCSError>) -> ()) {
+    public enum ResultFormat {
+        case data, JSON
+    }
+    
+    public func dataTask(method: HTTPMethod, url: String, body: [String : Any]? = nil, httpHeaders: [String : String]? = nil, resultFormat: ResultFormat = .JSON, completionHandler: @escaping (Result<Any, JKCSError>) -> ()) {
         guard let url = URL(string: url) else {
             completionHandler(Result.failure(.customError(message: "Invalid URL string.")))
             return
@@ -50,12 +54,24 @@ public class JKCSNetworkService {
                     completionHandler(Result.failure(.restServiceError((code: response.statusCode, message: "HTTP status code"))))
                     return
                 }
-                if let data = data,
-                    let jsonObject = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) {
-                    completionHandler(Result.success(jsonObject))
+                if let data = data {
+                    switch resultFormat {
+                    case .data:
+                        completionHandler(Result.success(data))
+                        return
+                    case .JSON:
+                        if let jsonObject = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) {
+                            completionHandler(Result.success(jsonObject))
+                            return
+                        }
+                        else {
+                            completionHandler(Result.failure(.customError(message: "Unrecogized JSON format.")))
+                            return
+                        }
+                    }
                 }
                 else {
-                    completionHandler(Result.failure(.customError(message: "Unrecogized data format.")))
+                    completionHandler(Result.failure(.customError(message: "Nil data.")))
                     return
                 }
             }

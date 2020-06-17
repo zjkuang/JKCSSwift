@@ -27,6 +27,7 @@
 		520AE9E8249A8082009A5E77 /* JKCSOpenCageGeoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520AE9E7249A8082009A5E77 /* JKCSOpenCageGeoService.swift */; };
 		5297DCF7249503000021F796 /* JKCSError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5297DCF6249503000021F796 /* JKCSError.swift */; };
 		5297DCF9249503D00021F796 /* JKCSNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5297DCF8249503D00021F796 /* JKCSNetworkService.swift */; };
+		5298516E249A9FB60099844A /* UIDeviceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5298516D249A9FB60099844A /* UIDeviceExtensions.swift */; };
 		OBJ_30 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_41 /* JKCSSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* JKCSSwiftTests.swift */; };
 		OBJ_42 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* XCTestManifests.swift */; };
@@ -57,6 +58,7 @@
 		520AE9E7249A8082009A5E77 /* JKCSOpenCageGeoService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JKCSOpenCageGeoService.swift; sourceTree = "<group>"; };
 		5297DCF6249503000021F796 /* JKCSError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JKCSError.swift; sourceTree = "<group>"; };
 		5297DCF8249503D00021F796 /* JKCSNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JKCSNetworkService.swift; sourceTree = "<group>"; };
+		5298516D249A9FB60099844A /* UIDeviceExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDeviceExtensions.swift; sourceTree = "<group>"; };
 		"JKCSSwift::JKCSSwift::Product" /* JKCSSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JKCSSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"JKCSSwift::JKCSSwiftTests::Product" /* JKCSSwiftTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = JKCSSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_12 /* JKCSSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JKCSSwiftTests.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 			children = (
 				520AE9CC2499964D009A5E77 /* DateExtensions.swift */,
 				520AE9AB249840E1009A5E77 /* StringExtentions.swift */,
+				5298516D249A9FB60099844A /* UIDeviceExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 				5297DCF9249503D00021F796 /* JKCSNetworkService.swift in Sources */,
 				520AE9A92498402F009A5E77 /* JKCSCachable.swift in Sources */,
 				520AE9CD2499964D009A5E77 /* DateExtensions.swift in Sources */,
+				5298516E249A9FB60099844A /* UIDeviceExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

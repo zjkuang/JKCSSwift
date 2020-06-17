@@ -1,6 +1,6 @@
 //
 //  JKCSOpenCageGeoService.swift
-//  Practice001
+//  JKCSSwift
 //
 //  Created by Zhengqian Kuang on 2020-06-13.
 //  Copyright © 2020 Kuang. All rights reserved.
@@ -8,10 +8,9 @@
 
 import Foundation
 
-/// Warning: This key was generated for public demo purpose. If the key is private, make sure to put it in a separate file and use git-crypt to encrypt it before pushing.
-let magic = "883080d0d4203df9f6f48b65b3184288"
-
 open class JKCSOpenCageGeoService {
+    static let magic = "883080d0d4203df9f6f48b65b3184288"
+    
     public init() {}
     
     public static func map(latitude: String, longitude: String, completionHander: @escaping (Result<[String : Any], JKCSError>) -> ()) {

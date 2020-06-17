@@ -1,6 +1,6 @@
 //
 //  JKCSCachable.swift
-//  Practice001
+//  JKCSSwift
 //
 //  Created by Zhengqian Kuang on 2020-06-15.
 //  Copyright © 2020 Kuang. All rights reserved.
@@ -10,7 +10,7 @@ import Foundation
 
 public enum JKCSStorageType: String {
     case userDefaults
-    // case keychain // For confidential information
+    // case keychain // To be added, for confidential information
 }
 
 public enum JKCSCacheLookupResult {
@@ -39,7 +39,7 @@ public extension JKCSCachable {
                 return Result.success(nil)
                 
             // case .keychain:
-                //
+                // to be added
             }
         }
         catch {
@@ -65,7 +65,7 @@ public extension JKCSCachable {
             }
                 
         // case .keychain:
-            //
+            // to be added
         }
     }
     
@@ -75,7 +75,7 @@ public extension JKCSCachable {
             UserDefaults.standard.removeObject(forKey: key)
                 
         // case .keychain:
-            //
+            // to be added
         }
     }
 }

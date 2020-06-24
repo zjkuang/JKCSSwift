@@ -24,7 +24,7 @@ public extension Data {
         }
     }
     
-    static func read(path: String? = nil, filename: String) -> Result<Self, JKCSError> {
+    static func read(path: String? = nil, filename: String) -> Result<Self?, JKCSError> {
         guard var url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             return Result.failure(.customError(message: "Failed to get Document directory."))
         }
@@ -36,7 +36,7 @@ public extension Data {
             let data = try Data(contentsOf: url)
             return Result.success(data)
         } catch {
-            return Result.failure(.customError(message: "Failed to read from file."))
+            return Result.success(nil)
         }
     }
 }

@@ -24,17 +24,22 @@ public extension String {
         return data.write(path: path, filename: filename)
     }
     
-    static func read(path: String? = nil, filename: String) -> Result<Self, JKCSError> {
+    static func read(path: String? = nil, filename: String) -> Result<Self?, JKCSError> {
         let result = Data.read(path: path, filename: filename)
         switch result {
         case .failure(let error):
             return Result.failure(error)
         case .success(let data):
-            if let str = String(data: data, encoding: .utf8) {
-                return Result.success(str)
+            if let data = data {
+                if let str = String(data: data, encoding: .utf8) {
+                    return Result.success(str)
+                }
+                else {
+                    return Result.failure(.customError(message: "Failed to decode data using UTF8."))
+                }
             }
             else {
-                return Result.failure(.customError(message: "Failed to decode data using UTF8."))
+                return Result.success(nil)
             }
         }
     }

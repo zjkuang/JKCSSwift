@@ -9,7 +9,9 @@ import Foundation
 
 public extension Data {
     func write(path: String? = nil, filename: String) -> Result<ExpressibleByNilLiteral?, JKCSError> {
-        var url = URL(fileURLWithPath: NSTemporaryDirectory())
+        guard var url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            return Result.failure(.customError(message: "Failed to get Document directory."))
+        }
         if let path = path {
             url.appendPathComponent(path)
         }
@@ -18,21 +20,23 @@ public extension Data {
             try write(to: url, options: .atomic)
             return Result.success(nil)
         } catch {
-            return Result.failure(.customError(message: "Failed to write data"))
+            return Result.failure(.customError(message: error.localizedDescription))
         }
     }
     
-    static func read(path: String? = nil, filename: String) -> Self? {
-        var url = URL(fileURLWithPath: NSTemporaryDirectory())
+    static func read(path: String? = nil, filename: String) -> Result<Self?, JKCSError> {
+        guard var url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            return Result.failure(.customError(message: "Failed to get Document directory."))
+        }
         if let path = path {
             url.appendPathComponent(path)
         }
         url.appendPathComponent(filename)
         do {
             let data = try Data(contentsOf: url)
-            return data
+            return Result.success(data)
         } catch {
-            return nil
+            return Result.success(nil)
         }
     }
 }

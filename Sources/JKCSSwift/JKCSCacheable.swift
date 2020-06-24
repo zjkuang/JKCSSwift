@@ -87,24 +87,18 @@ public extension JKCSCacheable {
             else {
                 path = cacheDirectory
             }
-            let result = Data.read(path: path, filename: key)
-            switch result {
-            case .failure(let error):
-                return Result.failure(error)
-            case .success(let data):
-                if let data = data {
-                    let decoder = JSONDecoder()
-                    do {
-                        let instance = try decoder.decode(T.self, from: data)
-                        return Result.success(instance)
-                    }
-                    catch {
-                        return Result.failure(JKCSError.customError(message: "Failed to decode"))
-                    }
+            if let data = Data.read(path: path, filename: key) {
+                let decoder = JSONDecoder()
+                do {
+                    let instance = try decoder.decode(T.self, from: data)
+                    return Result.success(instance)
                 }
-                else {
-                    return Result.success(nil)
+                catch {
+                    return Result.failure(JKCSError.customError(message: "Failed to decode"))
                 }
+            }
+            else {
+                return Result.success(nil)
             }
                 
         // case .keychain:

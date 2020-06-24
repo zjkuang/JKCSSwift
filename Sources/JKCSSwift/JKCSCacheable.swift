@@ -30,7 +30,7 @@ public protocol JKCSCacheable: Codable {
 }
 
 public extension JKCSCacheable {
-    @discardableResult func save(key: String, group: String? = nil, storage: JKCSStorageType = .file) -> Result<ExpressibleByNilLiteral?, JKCSError> {
+    @discardableResult func save(key: String, group: String = "default", storage: JKCSStorageType = .file) -> Result<ExpressibleByNilLiteral?, JKCSError> {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         do {
@@ -42,15 +42,14 @@ public extension JKCSCacheable {
                 return Result.success(nil)
                 
             case .file:
-                let path: String
-                if let group = group,
-                    group.count > 0 {
-                    path = "\(cacheDirectory)/\(group)"
+                let path = "\(cacheDirectory)/\(group)"
+                let result = JKCSFile.createDirectory(atRelativePath: path, baseDirectory: .cachesDirectory)
+                switch result {
+                case .failure(let error):
+                    return Result.failure(error)
+                case .success(_):
+                    return data.write(filename: key, relativePath: path, baseDirectory: .cachesDirectory)
                 }
-                else {
-                    path = cacheDirectory
-                }
-                return data.write(path: path, filename: key)
                 
             // case .keychain:
                 // to be added
@@ -63,7 +62,7 @@ public extension JKCSCacheable {
         }
     }
     
-    static func retrieve<T: JKCSCacheable>(key: String, group: String? = nil, storage: JKCSStorageType = .file) -> Result<T?, JKCSError> {
+    static func retrieve<T: JKCSCacheable>(key: String, group: String = "default", storage: JKCSStorageType = .file) -> Result<T?, JKCSError> {
         switch storage {
         case .userDefaults:
             guard let data = UserDefaults.standard.data(forKey: key) else {
@@ -79,15 +78,8 @@ public extension JKCSCacheable {
             }
             
         case .file:
-            let path: String
-            if let group = group,
-                group.count > 0 {
-                path = "\(cacheDirectory)/\(group)"
-            }
-            else {
-                path = cacheDirectory
-            }
-            let result = Data.read(path: path, filename: key)
+            let path = "\(cacheDirectory)/\(group)"
+            let result = Data.read(filename: key, relativePath: path, baseDirectory: .cachesDirectory)
             switch result {
             case .failure(let error):
                 return Result.failure(error)
@@ -112,7 +104,7 @@ public extension JKCSCacheable {
         }
     }
     
-    static func clearFromStorage(key: String, group: String? = nil, storage: JKCSStorageType = .file) {
+    static func clearFromStorage(key: String, group: String = "default", storage: JKCSStorageType = .file) {
         switch storage {
         case .userDefaults:
             UserDefaults.standard.removeObject(forKey: key)

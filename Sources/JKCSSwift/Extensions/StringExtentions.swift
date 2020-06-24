@@ -17,15 +17,15 @@ public extension String {
         return jsonObject
     }
     
-    func write(path: String? = nil, filename: String) -> Result<ExpressibleByNilLiteral?, JKCSError> {
+    func write(filename: String, relativePath: String? = nil, baseDirectory: FileManager.SearchPathDirectory) -> Result<ExpressibleByNilLiteral?, JKCSError> {
         guard let data = data(using: .utf8) else {
             return Result.failure(.customError(message: "Failed to convert to data using UTF8."))
         }
-        return data.write(path: path, filename: filename)
+        return data.write(filename: filename, relativePath: relativePath, baseDirectory: baseDirectory)
     }
     
-    static func read(path: String? = nil, filename: String) -> Result<Self?, JKCSError> {
-        let result = Data.read(path: path, filename: filename)
+    static func read(filename: String, relativePath: String? = nil, baseDirectory: FileManager.SearchPathDirectory) -> Result<Self?, JKCSError> {
+        let result = Data.read(filename: filename, relativePath: relativePath, baseDirectory: baseDirectory)
         switch result {
         case .failure(let error):
             return Result.failure(error)

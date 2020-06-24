@@ -8,12 +8,12 @@
 import Foundation
 
 public extension Data {
-    func write(path: String? = nil, filename: String) -> Result<ExpressibleByNilLiteral?, JKCSError> {
-        guard var url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            return Result.failure(.customError(message: "Failed to get Document directory."))
+    func write(filename: String, relativePath: String? = nil, baseDirectory: FileManager.SearchPathDirectory) -> Result<ExpressibleByNilLiteral?, JKCSError> {
+        guard var url = FileManager.default.urls(for: baseDirectory, in: .userDomainMask).first else {
+            return Result.failure(.customError(message: "Failed to get base directory."))
         }
-        if let path = path {
-            url.appendPathComponent(path)
+        if let relativePath = relativePath {
+            url.appendPathComponent(relativePath)
         }
         url.appendPathComponent(filename)
         do {
@@ -24,12 +24,12 @@ public extension Data {
         }
     }
     
-    static func read(path: String? = nil, filename: String) -> Result<Self?, JKCSError> {
-        guard var url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            return Result.failure(.customError(message: "Failed to get Document directory."))
+    static func read(filename: String, relativePath: String? = nil, baseDirectory: FileManager.SearchPathDirectory) -> Result<Self?, JKCSError> {
+        guard var url = FileManager.default.urls(for: baseDirectory, in: .userDomainMask).first else {
+            return Result.failure(.customError(message: "Failed to get base directory."))
         }
-        if let path = path {
-            url.appendPathComponent(path)
+        if let relativePath = relativePath {
+            url.appendPathComponent(relativePath)
         }
         url.appendPathComponent(filename)
         do {

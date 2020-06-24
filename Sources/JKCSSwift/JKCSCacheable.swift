@@ -22,11 +22,11 @@ public enum JKCSCacheLookupResult {
 }
 
 public protocol JKCSCacheable: Codable {
-    @discardableResult func save(key: String, group: String?, storage: JKCSStorageType) -> Result<ExpressibleByNilLiteral?, JKCSError>
+    @discardableResult func save(key: String, group: String, storage: JKCSStorageType) -> Result<ExpressibleByNilLiteral?, JKCSError>
     
-    static func retrieve<T: JKCSCacheable>(key: String, group: String?, storage: JKCSStorageType) -> Result<T?, JKCSError>
+    static func retrieve<T: JKCSCacheable>(key: String, group: String, storage: JKCSStorageType) -> Result<T?, JKCSError>
     
-    static func clearFromStorage(key: String, group: String?, storage: JKCSStorageType)
+    static func clearFromStorage(key: String, group: String, storage: JKCSStorageType)
 }
 
 public extension JKCSCacheable {
